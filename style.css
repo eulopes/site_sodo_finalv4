@@ -422,6 +422,8 @@ a { text-decoration: none; }
 
 /* ── CARDS DE SERVIÇOS ─────────────────────────────────────── */
 /* ── SERVICE CARD — animado ────────────────────────────────── */
+/* ── SERVICE CARD PREMIUM ────────────────────────────────── */
+
 .service-card {
   background: #fff;
   border: 1.5px solid #E2E8F0;
@@ -434,80 +436,127 @@ a { text-decoration: none; }
   align-items: center;
   position: relative;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.4s ease,
-              border-color 0.3s ease;
+
+  transition:
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.45s ease,
+    border-color 0.35s ease;
 }
 
-/* brilho que varre o card no hover */
+/* Reflexo premium */
 .service-card::before {
   content: '';
   position: absolute;
-  top: -60%;
-  left: -60%;
-  width: 60%;
-  height: 200%;
+  top: 0;
+  left: -130%;
+  width: 70%;
+  height: 100%;
   background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(0, 51, 160, 0.07) 50%,
-    transparent 60%
+    90deg,
+    transparent,
+    rgba(255,255,255,.55),
+    transparent
   );
-  transform: skewX(-15deg);
-  transition: left 0.6s ease;
+  transform: skewX(-20deg);
+  transition: left 0.8s ease;
   pointer-events: none;
-}
-.service-card:hover::before {
-  left: 160%;
+  z-index: 2;
 }
 
-/* linha de brilho na borda inferior */
-.service-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  width: 60%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #0033A0, transparent);
-  border-radius: 2px;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+.service-card:hover::before {
+  left: 140%;
 }
+
+/* Linha energética inferior */
+.service-card::after{
+  content:'';
+  position:absolute;
+
+  top:0;
+  left:-100%;
+
+  width:100%;
+  height:3px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    #0056ff,
+    transparent
+  );
+
+  transition:.8s;
+}
+
+.service-card:hover::after{
+  left:100%;
+}
+
 .service-card:hover::after {
   transform: translateX(-50%) scaleX(1);
 }
 
+/* Hover principal */
 .service-card:hover {
   transform: translateY(-10px) scale(1.02);
+
+  border-color: rgba(0,51,160,.25);
+
   box-shadow:
-    0 24px 60px rgba(0, 51, 160, 0.13),
-    0 4px 16px rgba(0, 51, 160, 0.06);
-  border-color: rgba(0, 51, 160, 0.28);
+    0 24px 60px rgba(0,51,160,.12),
+    0 8px 24px rgba(0,51,160,.08);
 }
 
-/* ícone */
+/* ── ÍCONE ─────────────────────────────────────────────── */
+
 .service-icon {
   width: 110px;
   height: 110px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   margin: 0 auto 24px;
   position: relative;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  transition:
+    transform .45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* anel pulsante atrás do ícone */
+/* Glow azul atrás do ícone */
+.service-icon::after {
+  content: '';
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  background: rgba(0,51,160,.10);
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity .45s ease;
+}
+
+.service-card:hover .service-icon::after {
+  opacity: 1;
+}
+
+/* Anel pulsante */
 .service-icon::before {
   content: '';
   position: absolute;
-  inset: -6px;
+  inset: -8px;
+
   border-radius: 50%;
-  border: 1.5px solid rgba(0, 51, 160, 0.15);
-  transform: scale(0.85);
+  border: 1.5px solid rgba(0,51,160,.12);
+
+  transform: scale(.85);
   opacity: 0;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+
+  transition:
+    transform .45s ease,
+    opacity .45s ease;
 }
+
 .service-card:hover .service-icon::before {
   transform: scale(1);
   opacity: 1;
@@ -515,45 +564,67 @@ a { text-decoration: none; }
 }
 
 @keyframes ring-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0,51,160,0.15); }
-  50%       { box-shadow: 0 0 0 8px rgba(0,51,160,0); }
+  0%,100%{
+    box-shadow: 0 0 0 0 rgba(0,51,160,.15);
+  }
+  50%{
+    box-shadow: 0 0 0 10px rgba(0,51,160,0);
+  }
 }
 
 .service-card:hover .service-icon {
-  transform: scale(1.12) rotate(-4deg);
+  transform: scale(1.08);
 }
 
 .service-icon svg {
   width: 80px;
   height: 80px;
+  position: relative;
+  z-index: 3;
 }
 
 .service-icon img {
   width: 110px;
   height: 110px;
   object-fit: contain;
-  transition: filter 0.3s ease;
-}
-.service-card:hover .service-icon img {
-  filter: drop-shadow(0 6px 18px rgba(0,51,160,0.25));
+  position: relative;
+  z-index: 3;
+
+  transition:
+    filter .3s ease,
+    transform .3s ease;
 }
 
-/* nome */
+.service-card:hover .service-icon img {
+  filter: drop-shadow(0 8px 18px rgba(0,51,160,.25));
+}
+
+/* ── TÍTULO ────────────────────────────────────────────── */
+
 .service-name {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 13px;
+
   color: var(--cor-texto-escuro);
+
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: .8px;
+
   margin-bottom: 10px;
-  transition: color 0.3s ease;
-}
-.service-card:hover .service-name {
-  color: #0033A0;
+
+  transition:
+    color .3s ease,
+    transform .3s ease;
 }
 
-/* descrição */
+.service-card:hover .service-name {
+  color: #0033A0;
+  transform: translateY(-2px);
+}
+
+/* ── DESCRIÇÃO ─────────────────────────────────────────── */
+
 .service-desc {
   font-size: 14px;
   color: var(--cor-muted);
@@ -561,6 +632,31 @@ a { text-decoration: none; }
   flex: 1;
 }
 
+/* ── LINK ──────────────────────────────────────────────── */
+
+.service-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  margin-top: 16px;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+
+  color: var(--cor-primaria);
+
+  transition:
+    gap .3s ease,
+    transform .3s ease,
+    color .3s ease;
+}
+
+.service-card:hover .service-link {
+  gap: 8px;
+  transform: translateY(-2px);
+}
 /* ── SOBRE NÓS ─────────────────────────────────────────────── */
 .about-glow {
   position: absolute;

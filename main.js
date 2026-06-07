@@ -111,3 +111,7 @@
 
 
 
+/* 5 EFEITO DE ANIMAÇÃO SERVICE CARDS */
+
+card.style.setProperty('--x', `${x}px`);
+card.style.setProperty('--y', `${y}px`);
